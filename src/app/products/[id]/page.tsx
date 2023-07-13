@@ -46,7 +46,9 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
       />
       <div>
         <h1 className="text-5xl font-bold">{product.name}</h1>
-        <PriceTag price={product.price} className="" />
+        <div className="mt-4">
+          <PriceTag price={product.price} className="" />
+        </div>
         <p className="py-6">{product.description}</p>
         <AddToCardButton
           productId={product.id}
