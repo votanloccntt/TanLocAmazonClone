@@ -23,7 +23,10 @@ async function Navbar() {
     <div className="bg-base-100">
       <div className="navbar max-w-7xl m-auto flex-col sm:flex-row gap-2">
         <div className="flex-1">
-          <Link href="/" className="btn btn-ghost text-xl normal-case">
+          <Link
+            href="/"
+            className="btn btn-ghost text-xl normal-case text-primary"
+          >
             <Image src={logo} height={40} width={40} alt="TanLoc Amazon" />
             Tấn Lộc Amazon
           </Link>

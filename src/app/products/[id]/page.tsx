@@ -1,11 +1,11 @@
 import { prisma } from "@/lib/db/prisma";
-import { notFound } from "next/navigation";
-import Image from "next/image";
-import { PriceTag } from "@/components/PriceTag";
 import { Metadata } from "next";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 import { cache } from "react";
-import AddToCardButton from "../AddToCardButton";
-import incrementProductQuantity from "./actions";
+import { incrementProductQuantity } from "./actions";
+import { PriceTag } from "@/components/PriceTag";
+import AddToCartButton from "../AddToCardButton";
 
 interface ProductPageProps {
   params: {
@@ -19,23 +19,27 @@ const getProduct = cache(async (id: string) => {
   return product;
 });
 
-export const generateMetadata = async ({
+export async function generateMetadata({
   params: { id },
-}: ProductPageProps): Promise<Metadata> => {
+}: ProductPageProps): Promise<Metadata> {
   const product = await getProduct(id);
+
   return {
-    title: product.name + " - TanLoc Amazon",
+    title: product.name + " - Flowmazon",
     description: product.description,
     openGraph: {
       images: [{ url: product.imageUrl }],
     },
   };
-};
+}
 
-const ProductPage = async ({ params: { id } }: ProductPageProps) => {
+export default async function ProductPage({
+  params: { id },
+}: ProductPageProps) {
   const product = await getProduct(id);
+
   return (
-    <div className="flex flex-col lg:flex-row lg:items-center gap-4">
+    <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
       <Image
         src={product.imageUrl}
         alt={product.name}
@@ -44,18 +48,16 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
         className="rounded-lg"
         priority
       />
+
       <div>
         <h1 className="text-5xl font-bold">{product.name}</h1>
-        <div className="mt-4">
-          <PriceTag price={product.price} className="" />
-        </div>
+        <PriceTag price={product.price} className="mt-4" />
         <p className="py-6">{product.description}</p>
-        <AddToCardButton
+        <AddToCartButton
           productId={product.id}
-          incrementProductQuanlity={incrementProductQuantity}
+          incrementProductQuantity={incrementProductQuantity}
         />
       </div>
     </div>
   );
-};
-export default ProductPage;
+}

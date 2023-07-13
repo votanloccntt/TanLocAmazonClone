@@ -11,10 +11,10 @@ interface CartEntryProps {
   setProductQuantity: (productId: string, quantity: number) => Promise<void>;
 }
 
-const CartEntry = ({
+export default function CartEntry({
   cartItem: { product, quantity },
   setProductQuantity,
-}: CartEntryProps) => {
+}: CartEntryProps) {
   const [isPending, startTransition] = useTransition();
 
   const quantityOptions: JSX.Element[] = [];
@@ -25,6 +25,7 @@ const CartEntry = ({
       </option>
     );
   }
+
   return (
     <div>
       <div className="flex flex-wrap items-center gap-3">
@@ -43,7 +44,7 @@ const CartEntry = ({
           <div className="my-1 flex items-center gap-2">
             Quantity:
             <select
-              className="select w-full max-w-[80px] bg-gray-100"
+              className="select-bordered select w-full max-w-[80px]"
               defaultValue={quantity}
               onChange={(e) => {
                 const newQuantity = parseInt(e.currentTarget.value);
@@ -67,5 +68,4 @@ const CartEntry = ({
       <div className="divider" />
     </div>
   );
-};
-export default CartEntry;
+}
