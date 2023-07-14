@@ -1,5 +1,5 @@
 import FormSubmitButton from "@/components/FormSubmitButton";
-import { prisma } from "@/lib/db/prisma";
+import { prismaBase } from "@/lib/db/prisma";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/route";
@@ -23,7 +23,7 @@ async function addProduct(formData: FormData) {
   if (!name || !description || !imageUrl || !price) {
     throw Error("Missing required fields");
   }
-  await prisma.product.create({
+  await prismaBase.product.create({
     data: { name, description, imageUrl, price },
   });
   redirect("/");

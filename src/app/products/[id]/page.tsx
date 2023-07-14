@@ -1,4 +1,3 @@
-import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -6,6 +5,7 @@ import { cache } from "react";
 import { incrementProductQuantity } from "./actions";
 import { PriceTag } from "@/components/PriceTag";
 import AddToCartButton from "../AddToCardButton";
+import { prisma } from "@/lib/db/prisma";
 
 interface ProductPageProps {
   params: {
