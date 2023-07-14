@@ -44,7 +44,7 @@ export default function CartEntry({
           <div className="my-1 flex items-center gap-2">
             Quantity:
             <select
-              className="select-bordered select w-full max-w-[80px]"
+              className=" select w-full max-w-[80px]"
               defaultValue={quantity}
               onChange={(e) => {
                 const newQuantity = parseInt(e.currentTarget.value);
