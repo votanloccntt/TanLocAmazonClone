@@ -1,8 +1,8 @@
 import FormSubmitButton from "@/components/FormSubmitButton";
-import { prismaBase } from "@/lib/db/prisma";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/route";
+import { prisma } from "@/lib/db/prisma";
 
 export const metadata = {
   title: "Add product - TanLoc Amazon",
@@ -23,7 +23,7 @@ async function addProduct(formData: FormData) {
   if (!name || !description || !imageUrl || !price) {
     throw Error("Missing required fields");
   }
-  await prismaBase.product.create({
+  await prisma.product.create({
     data: { name, description, imageUrl, price },
   });
   redirect("/");
