@@ -1,33 +1,36 @@
-import Link from "next/link";
 import logo from "@/assets/logo.png";
-import Image from "next/image";
-import { redirect } from "next/navigation";
 import { getCart } from "@/lib/db/cart";
+import { getServerSession } from "next-auth";
+import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 import ShoppingCartButton from "./ShoppingCartButton";
 import UserMenuButton from "./UserMenuButton";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 async function searchProducts(formData: FormData) {
   "use server";
-  const searchQuery = formData.get("searchQuerys")?.toString();
+
+  const searchQuery = formData.get("searchQuery")?.toString();
+
   if (searchQuery) {
     redirect("/search?query=" + searchQuery);
   }
 }
 
-async function Navbar() {
+export default async function Navbar() {
   const session = await getServerSession(authOptions);
   const cart = await getCart();
+
   return (
     <div className="bg-base-100">
-      <div className="navbar max-w-7xl m-auto flex-col sm:flex-row gap-2">
+      <div className="navbar m-auto max-w-7xl flex-col gap-2 sm:flex-row">
         <div className="flex-1">
           <Link
             href="/"
-            className="btn btn-ghost text-xl normal-case text-primary"
+            className="btn-ghost btn text-xl normal-case text-primary"
           >
-            <Image src={logo} height={40} width={40} alt="TanLoc Amazon" />
+            <Image src={logo} height={50} width={50} alt="Flowmazon logo" />
             Tấn Lộc Amazon
           </Link>
         </div>
@@ -35,10 +38,9 @@ async function Navbar() {
           <form action={searchProducts}>
             <div className="form-control">
               <input
-                type="text"
                 name="searchQuery"
                 placeholder="Search"
-                className="input input-bordered w-full min-w-[100px]"
+                className="input-bordered input w-full min-w-[100px]"
               />
             </div>
           </form>
@@ -49,5 +51,3 @@ async function Navbar() {
     </div>
   );
 }
-
-export default Navbar;
